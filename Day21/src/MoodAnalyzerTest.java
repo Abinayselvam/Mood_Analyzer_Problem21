@@ -1,32 +1,86 @@
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.AssertJUnit.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class MoodAnalyzerTest {
 
     @Test
-    void givenSadMessage_shouldReturnSad()
-    {
+    public void givenSadMessage_shouldReturnSad()
+            throws MoodAnalysisException {
 
-        MoodAnalyzer mood= new MoodAnalyzer("I am Sad");
-        String mood1= mood.analyzeMood();
+        MoodAnalyzer mood =
+                new MoodAnalyzer(
+                        "I am Sad"
+                );
 
-        assertEquals("Sad",mood1);
+        String result =
+                mood.analyzeMood();
+
+        assertEquals(
+                result,
+                "Sad"
+        );
     }
 
     @Test
-    void givenAnyMessage_shouldReturnHappy()
-    {
-        MoodAnalyzer mood=new MoodAnalyzer("I'm Happy Any way");
-        String mood1=mood.analyzeMood();
-        assertEquals("Happy",mood1);
+    public void givenAnyMessage_shouldReturnHappy()
+            throws MoodAnalysisException {
+
+        MoodAnalyzer mood =
+                new MoodAnalyzer(
+                        "I'm Happy Anyway"
+                );
+
+        String result =
+                mood.analyzeMood();
+
+        assertEquals(
+                result,
+                "Happy"
+        );
     }
 
     @Test
-    void givenNullMood_shouldReturnHappy()
-    {
-        MoodAnalyzer mood=new MoodAnalyzer(null);
-        String mood1=mood.analyzeMood();
-        assertEquals("Happy",mood1);
+    void givenNullMood_ShouldThrowException() {
+
+        MoodAnalyzer mood =
+                new MoodAnalyzer(null);
+
+        MoodAnalysisException exception =
+                assertThrows(
+
+                        MoodAnalysisException.class,
+
+                        () -> mood.analyzeMood()
+                );
+
+        assertEquals(
+                MoodAnalysisException.ExceptionType.Null_Mood,
+                exception.type
+        );
+    }
+
+    @Test
+    public void givenEmptyMood_ShouldThrowException() {
+
+        MoodAnalyzer mood =
+                new MoodAnalyzer("");
+
+        MoodAnalysisException exception =
+                assertThrows(
+
+                        MoodAnalysisException.class,
+
+                        () -> mood.analyzeMood()
+                );
+
+        assertEquals(
+
+                exception.type,
+
+                MoodAnalysisException
+                        .ExceptionType
+                        .Empty_Mood
+        );
     }
 }
