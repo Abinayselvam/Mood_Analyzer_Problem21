@@ -101,4 +101,25 @@ public class MoodAnalyzerTest {
                 actual.getClass()
         );
     }
+
+    @Test
+    void givenMoodMessage_ShouldReturnMoodObject()
+
+            throws Exception {
+
+        MoodAnalyzer analyser =
+
+                MoodAnalyzerFactory
+                        .createMoodAnalyser(
+                                "I am in Happy Mood"
+                        );
+
+        String mood =
+                analyser.analyzeMood();
+
+        assertEquals(
+                "HAPPY",
+                mood
+        );
+    }
 }
