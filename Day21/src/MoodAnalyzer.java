@@ -1,6 +1,20 @@
 public class MoodAnalyzer {
-    public String analyzeMood(String message)
+
+    String message;
+    //Default Constructor
+    public MoodAnalyzer()
     {
+
+    }
+    //Parameterized Constructor
+    public MoodAnalyzer(String message)
+    {
+        this.message=message;
+    }
+
+    public String analyzeMood()
+    {
+
         message=message.toLowerCase();
         if(message.contains("sad"))
         {
