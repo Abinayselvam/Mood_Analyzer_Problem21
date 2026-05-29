@@ -4,44 +4,50 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MoodAnalyzerTest {
 
+    // UC1 — SAD Mood
+
     @Test
-    public void givenSadMessage_shouldReturnSad()
+    public void givenSadMessage_ShouldReturnSad()
             throws MoodAnalysisException {
 
         MoodAnalyzer mood =
                 new MoodAnalyzer(
-                        "I am Sad"
+                        "I am in Sad Mood"
                 );
 
         String result =
                 mood.analyzeMood();
 
         assertEquals(
-                result,
-                "Sad"
+                "SAD",
+                result
         );
     }
 
+    // UC1 — HAPPY Mood
+
     @Test
-    public void givenAnyMessage_shouldReturnHappy()
+    public void givenAnyMessage_ShouldReturnHappy()
             throws MoodAnalysisException {
 
         MoodAnalyzer mood =
                 new MoodAnalyzer(
-                        "I'm Happy Anyway"
+                        "I am Happy"
                 );
 
         String result =
                 mood.analyzeMood();
 
         assertEquals(
-                result,
-                "Happy"
+                "HAPPY",
+                result
         );
     }
 
+    // UC3 — NULL Mood Exception
+
     @Test
-    void givenNullMood_ShouldThrowException() {
+    public void givenNullMood_ShouldThrowException() {
 
         MoodAnalyzer mood =
                 new MoodAnalyzer(null);
@@ -55,10 +61,16 @@ public class MoodAnalyzerTest {
                 );
 
         assertEquals(
-                MoodAnalysisException.ExceptionType.Null_Mood,
+
+                MoodAnalysisException
+                        .ExceptionType
+                        .Null_Mood,
+
                 exception.type
         );
     }
+
+    // UC3 — EMPTY Mood Exception
 
     @Test
     public void givenEmptyMood_ShouldThrowException() {
@@ -76,34 +88,40 @@ public class MoodAnalyzerTest {
 
         assertEquals(
 
-                exception.type,
-
                 MoodAnalysisException
                         .ExceptionType
-                        .Empty_Mood
+                        .Empty_Mood,
+
+                exception.type
         );
     }
 
+    // UC5 — Reflection Default Constructor
+
     @Test
-    void givenMoodAnalyserClassName_ShouldReturnObject()
+    public void givenMoodAnalyzerClassName_ShouldReturnObject()
 
             throws Exception {
 
         MoodAnalyzer expected =
-                new MoodAnalyzer("");
+                new MoodAnalyzer();
 
         MoodAnalyzer actual =
                 MoodAnalyzerFactory
                         .createMoodAnalyser();
 
         assertEquals(
+
                 expected.getClass(),
+
                 actual.getClass()
         );
     }
 
+    // UC6 — Reflection Parameterized Constructor
+
     @Test
-    void givenMoodMessage_ShouldReturnMoodObject()
+    public void givenMoodMessage_ShouldReturnMoodObject()
 
             throws Exception {
 
@@ -119,6 +137,90 @@ public class MoodAnalyzerTest {
 
         assertEquals(
                 "HAPPY",
+                mood
+        );
+    }
+
+    // UC7 — Wrong Class Name
+
+    @Test
+    public void givenWrongClassName_ShouldThrowException() {
+
+        MoodAnalysisException exception =
+
+                assertThrows(
+
+                        MoodAnalysisException.class,
+
+                        () ->
+
+                                MoodAnalyzerFactory
+                                        .createMoodAnalyser(
+
+                                                "WrongClass",
+
+                                                "I am Happy"
+                                        )
+                );
+
+        assertEquals(
+
+                MoodAnalysisException
+                        .ExceptionType
+                        .NO_SUCH_CLASS,
+
+                exception.type
+        );
+    }
+
+    // UC7 — Wrong Constructor
+
+    @Test
+    public void givenWrongConstructor_ShouldThrowException() {
+
+        MoodAnalysisException exception =
+
+                assertThrows(
+
+                        MoodAnalysisException.class,
+
+                        () ->
+
+                                MoodAnalyzerFactory
+                                        .createMoodAnalyser(
+
+                                                "MoodAnalyzer",
+
+                                                null
+                                        )
+                );
+
+        assertEquals(
+
+                MoodAnalysisException
+                        .ExceptionType
+                        .OBJECT_CREATION_ISSUE,
+
+                exception.type
+        );
+    }
+
+    // UC7 — Reflection Method Invocation
+
+    @Test
+    public void givenMessage_ShouldInvokeMethod()
+
+            throws Exception {
+
+        String mood =
+
+                MoodAnalyzerFactory
+                        .invokeAnalyseMood(
+                                "I am in Sad Mood"
+                        );
+
+        assertEquals(
+                "SAD",
                 mood
         );
     }

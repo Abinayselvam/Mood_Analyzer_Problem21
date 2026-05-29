@@ -2,6 +2,12 @@ public class MoodAnalyzer {
 
     String message;
 
+    // Default Constructor
+    public MoodAnalyzer() {
+
+    }
+
+    // Parameterized Constructor
     public MoodAnalyzer(String message) {
 
         this.message = message;
@@ -12,7 +18,7 @@ public class MoodAnalyzer {
 
         try {
 
-            if(message.length()==0) {
+            if(message.length() == 0) {
 
                 throw new MoodAnalysisException(
 
