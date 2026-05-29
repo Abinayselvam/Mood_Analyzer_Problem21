@@ -83,4 +83,22 @@ public class MoodAnalyzerTest {
                         .Empty_Mood
         );
     }
+
+    @Test
+    void givenMoodAnalyserClassName_ShouldReturnObject()
+
+            throws Exception {
+
+        MoodAnalyzer expected =
+                new MoodAnalyzer("");
+
+        MoodAnalyzer actual =
+                MoodAnalyzerFactory
+                        .createMoodAnalyser();
+
+        assertEquals(
+                expected.getClass(),
+                actual.getClass()
+        );
+    }
 }
